@@ -1,10 +1,11 @@
 import React from "react";
+import {useNavigate} from 'react-router-dom'
 
-function Login({history}){
+function Login(){
+    const navigate = useNavigate()
 
     function passa(){
-        
-        history.push('/calendar')
+        navigate('/calendar')
     }
 
     return (
