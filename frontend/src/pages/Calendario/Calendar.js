@@ -2,14 +2,18 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Calendar from 'react-calendar';
 import './Calendar.css';
-import api from '../services/api';
+import api from '../../services/api';
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+import {Table} from 'react-bootstrap'
 
 function App() {
 
-  const [dia,setDia] = useState();
-  const [mes,setMes] = useState();
-  const [ano,setAno] = useState();
+  const [dia,setDia] = useState(0);
+  const [mes,setMes] = useState(-1);
+  const [ano,setAno] = useState(0);
   const [noivas,setNoivas] = useState([]);
+  //var cont = 1;
   
   useEffect(() => {
     async function loadNoivas(){
@@ -35,25 +39,35 @@ function App() {
       <Calendar onClickDay={(value) => setDia(value.getDate(),
       setMes(value.getMonth()),
       setAno(value.getFullYear()))
-    }
-      
+    } 
     />
     <h1>{dia}/{mes+1}/{ano}</h1>
-    
-    <h2 className='noiva-list'>
-      {noivas.length? 
-      noivas.map(noiva => (
-        <strong key={noiva.cpf}>{noiva.nome}  
-        <br></br>
-        <button className='button-3' onClick={() => loadInfo(noiva.cpf)}>Ver info de {noiva.nome}</button>
-        <br></br>
-        </strong>
+
+   <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>CPF</th>
+        <th>Nome</th>
+        <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    {noivas.map((noiva,index) => (
+      <tr key={noiva.cpf}>
+        <td>{index} </td>
+        <td>{noiva.cpf}</td>
+        <td>{noiva.nome}</td>
+        <td><button onClick={() => loadInfo(noiva.cpf)}>Ver informações</button></td>
         
-        
-      )): <strong>Nenhuma noiva cadastrada nesse dia. <br></br></strong>
-      }
+      </tr>
       
-    </h2>
+    ))}
+      
+    </tbody>
+   </Table>
+    
+    
     </div>
   );
 }
