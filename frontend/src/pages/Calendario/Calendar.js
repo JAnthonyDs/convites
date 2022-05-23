@@ -6,6 +6,7 @@ import api from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import {Table} from 'react-bootstrap'
+import {Button} from 'react-bootstrap'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
     } 
     />
     <h1>{dia}/{mes+1}/{ano}</h1>
+    <Button variant='outline-success'>Cadastrar noiva nesse dia</Button>
 
    <Table striped bordered hover>
     <thead>
@@ -58,7 +60,7 @@ function App() {
         <td>{index} </td>
         <td>{noiva.cpf}</td>
         <td>{noiva.nome}</td>
-        <td><button onClick={() => loadInfo(noiva.cpf)}>Ver informações</button></td>
+        <td><Button variant="outline-primary" onClick={() => loadInfo(noiva.cpf)}>Ver informações</Button></td>
         
       </tr>
       

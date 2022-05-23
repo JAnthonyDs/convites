@@ -1,21 +1,11 @@
 import * as React from 'react';
 import {useState} from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useNavigate} from 'react-router-dom'
 
 import api from '../../services/api'
 
-const theme = createTheme();
+import {useNavigate} from 'react-router-dom'
+
+import './login.css'
 
 export default function SignIn() {
     const [login,setLogin] = useState()
@@ -24,7 +14,7 @@ export default function SignIn() {
     const navigate = useNavigate()
 
     async function handleSubmit(event){
-        event.preventDefault();
+        
 
         const response = await  api.post('/login',{login,senha})
 
@@ -36,63 +26,35 @@ export default function SignIn() {
     };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Login"
-              name="email"
-              autoComplete="email"
-              onChange={event => setLogin(event.target.value)}
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={event => setSenha(event.target.value)}
-            />
-            
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              
-            >
-              Acessar
-            </Button>
-            <Grid container>
-              
-            </Grid>
-          </Box>
-        </Box>
+    <div className='body'>
+      <main className='form-signin w-100 m-auto'>
         
-      </Container>
-    </ThemeProvider>
+        <h1 className='h1'>Login</h1>
+
+        <div className='form-floating'>
+          <input type="email" className='form-control' id="floatingInput" placeholder="name@example.com"
+          onChange={event => setLogin(event.target.value)}
+          ></input>
+          <label >Login</label>
+        </div>
+
+        <div className="form-floating">
+        <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+        onChange={event => setSenha(event.target.value)}
+        ></input>
+        <label >Senha</label>
+        <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={() => handleSubmit()}>Acessar</button>
+
+        <div className='checkbox mb-3'>
+          <label>
+            
+          </label>
+        </div>
+
+        <p className="mt-5 mb-3 text-muted">&copy; Convites Store</p>
+      </div>
+      
+      </main>
+    </div>
   );
 }
