@@ -6,9 +6,7 @@ const verifica = (req: Request, res: Response) => {
     const login = req.body as Login
     loginModel.verifica(login)
     .then(login => {
-        res.json({
-            "message":"Bem vindo"
-        })
+        res.json(login)
     })
     .catch(err => {
         internalServerErro(res,err)

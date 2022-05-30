@@ -21,9 +21,9 @@ const insertNoiva = (req: Request, res: Response) =>{
 
     const noiva = req.body as Noiva;
     noivaModel.insertNoiva(noiva)
-     .then(cpf => {
+     .then(() => {
          res.json({
-             "noiva cadastrada com sucesso":cpf
+             "message":"ok"
          })
      })
      .catch(err =>{

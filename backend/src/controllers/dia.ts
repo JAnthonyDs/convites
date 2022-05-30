@@ -39,8 +39,19 @@ const deleteDia = (req: Request, res: Response) =>{
     })
 }
 
+const showDia = (req: Request, res: Response) => {
+    diaModel.showDia()
+    .then(dia => {
+        res.json(dia)
+    })
+    .catch(err => {
+        internalServerErro(res,err)
+    })
+}
+
 export const diaController = {
     selectDia,
     insertDia,
-    deleteDia
+    deleteDia,
+    showDia
 }

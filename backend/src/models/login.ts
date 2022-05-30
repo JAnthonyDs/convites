@@ -6,7 +6,8 @@ export type Login ={
 }
 
 const verifica = async (login: Login) =>{
-    await dbQuery(`SELECT user.login, user.senha FROM user WHERE user.login == (?) AND user.senha == (?)`,[login.login,login.senha]);
+    const retorno =  await dbQuery(`SELECT user.login, user.senha FROM user WHERE user.login == (?) AND user.senha == (?)`,[login.login,login.senha]);
+    return retorno
 }
 
 const cadastra = async (login: Login) => {
