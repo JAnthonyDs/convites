@@ -8,13 +8,16 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {Table} from 'react-bootstrap'
 import {Button} from 'react-bootstrap'
 
+import {useNavigate} from 'react-router-dom'
+
 function App() {
 
   const [dia,setDia] = useState(0);
   const [mes,setMes] = useState(-1);
   const [ano,setAno] = useState(0);
   const [noivas,setNoivas] = useState([]);
-  //var cont = 1;
+  
+  const navigate = useNavigate()
   
   useEffect(() => {
     async function loadNoivas(){
@@ -29,9 +32,11 @@ function App() {
     const response = await api.post('/noiva/select',{cpf})
     console.log(response.data)
     localStorage.setItem('cpf_noiva',cpf)
-    localStorage.setItem('dia',dia)
+    localStorage.setItem('dia',dia +1)
     localStorage.setItem('mes',mes)
     localStorage.setItem('ano',ano)
+
+    navigate('/noiva')
     
   }
 

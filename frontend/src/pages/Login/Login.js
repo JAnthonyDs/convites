@@ -32,14 +32,14 @@ export default function SignIn() {
         <h1 className='h1'>Login</h1>
 
         <div className='form-floating'>
-          <input type="email" className='form-control' id="floatingInput" placeholder="name@example.com"
+          <input type="email" className='form-control' required id="floatingInput" placeholder="name@example.com"
           onChange={event => setLogin(event.target.value)}
           ></input>
           <label >Login</label>
         </div>
 
         <div className="form-floating">
-        <input type="password" className="form-control" id="floatingPassword" placeholder="Password"
+        <input type="password" className="form-control" required id="floatingPassword" placeholder="Password"
         onChange={event => setSenha(event.target.value)}
         ></input>
         <label >Senha</label>
