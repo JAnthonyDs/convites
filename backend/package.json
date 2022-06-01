@@ -10,6 +10,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "multer": "^1.4.5-lts.1",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
@@ -25,5 +26,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/multer": "^1.4.7"
+  }
 }
