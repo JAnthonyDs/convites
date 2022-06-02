@@ -5,6 +5,10 @@ import {Button} from 'react-bootstrap'
 
 import './style.css'
 
+import { ToastContainer, toast, TypeOptions } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
+
+
 export default function ViewNoivas(){
     
     const [nome,setNome] = useState()
@@ -13,6 +17,10 @@ export default function ViewNoivas(){
     const [mes,setMes] = useState()
     const [ano,setAno] = useState()
     const [cpf,setCpf] = useState()
+
+    const notify = () => {
+        toast("Atualizado com Sucesso",{type:"success"})
+    };
 
     useEffect( () =>{
         async function loadInfo(){
@@ -33,11 +41,13 @@ export default function ViewNoivas(){
     async function update(cpf){
         const response = await api.put('/noiva/update',{"cpf_antigo":cpf,cpf,nome,descricao})
         console.log(response.data)
+        notify();
     }
 
     async function deletar(cpf){
-        const response = await api.delete('/dia/delete',{"dia":dia,"mes":mes,"ano":ano,"cpf":cpf})
-        console.log(response.data)
+        //apaga a noiva naquele dia
+        const response = await api.delete('/dia/delete/',{dia,mes,ano,cpf})
+        
     }
 
     return(
@@ -51,10 +61,12 @@ export default function ViewNoivas(){
             <strong>Descrição:</strong>
             <input className="form-descricao" value={descricao} onChange={event => setDescricao(event.target.value)}></input>
             <div className="buttons">
-            <Button className="button" variant="outline-danger" onClick={() => deletar(cpf)}>Deletar</Button>
+            <Button className="button" variant="outline-danger" onClick={() => deletar(cpf)}>Excluir</Button>
             
             <Button variant="outline-success" onClick={() => update(cpf)}>Salvar</Button>
             </div>
+
+            <ToastContainer position="top-center" newestOnTop/>
         </div>
     );
 }

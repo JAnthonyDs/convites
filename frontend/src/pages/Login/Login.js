@@ -7,21 +7,33 @@ import {useNavigate} from 'react-router-dom'
 
 import './login.css'
 
+import { ToastContainer, toast, TypeOptions } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
+
+
 export default function SignIn() {
     const [login,setLogin] = useState()
     const [senha,setSenha] = useState()
 
     const navigate = useNavigate()
 
-    async function handleSubmit(event){
+    const notify = () => {
+      toast("Usuário não encontrado!",{type:"error"})
+    };
+
+    async function handleSubmit(){
         
 
         const response = await  api.post('/login',{login,senha})
 
         if(response.data.length === 1){
+            localStorage.setItem("acess",true)
             navigate('/calendar')
         }
-        console.log(response)
+        else{
+          notify()
+        }
+        
         
     };
 
@@ -53,6 +65,8 @@ export default function SignIn() {
 
         <p className="mt-5 mb-3 text-muted">&copy; Convites Store</p>
       </div>
+
+      <ToastContainer position="top-center" newestOnTop/>
       
       </main>
     </div>

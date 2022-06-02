@@ -4,11 +4,14 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import api from '../../services/api';
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 import {Table} from 'react-bootstrap'
 import {Button} from 'react-bootstrap'
 
 import {useNavigate} from 'react-router-dom'
+
+import { ToastContainer, toast, TypeOptions } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
+
 
 function App() {
 
@@ -16,6 +19,11 @@ function App() {
   const [mes,setMes] = useState(-1);
   const [ano,setAno] = useState(0);
   const [noivas,setNoivas] = useState([]);
+  const [veri_user,setVeri_user] = useState(localStorage.getItem("acess"))
+
+  const notify = () => {
+    toast("Selecione um dia!!",{type:"warning"})
+  };
   
   const navigate = useNavigate()
   
@@ -27,16 +35,29 @@ function App() {
     }
     loadNoivas();
   },[dia])
+
   
   async function loadInfo(cpf){
     const response = await api.post('/noiva/select',{cpf})
     console.log(response.data)
     localStorage.setItem('cpf_noiva',cpf)
-    localStorage.setItem('dia',dia +1)
+    localStorage.setItem('dia',dia)
     localStorage.setItem('mes',mes)
     localStorage.setItem('ano',ano)
 
     navigate('/noiva')
+    
+  }
+
+  async function cadastro(){
+    if(dia == 0){
+      notify()
+    }else{
+      localStorage.setItem('dia',dia)
+    localStorage.setItem('mes',mes)
+    localStorage.setItem('ano',ano)
+    navigate('/cadastro')
+    }
     
   }
 
@@ -48,7 +69,11 @@ function App() {
     } 
     />
     <h1>{dia}/{mes+1}/{ano}</h1>
-    <Button variant='outline-success'>Cadastrar noiva nesse dia</Button>
+    
+    <Button variant='outline-success' onClick={() => cadastro()}>Cadastrar noiva nesse dia</Button>  
+    
+
+   
 
    <Table striped bordered hover>
     <thead>
@@ -73,7 +98,7 @@ function App() {
       
     </tbody>
    </Table>
-    
+   <ToastContainer position="top-center" newestOnTop/>
     
     </div>
   );
