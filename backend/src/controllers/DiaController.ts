@@ -27,8 +27,17 @@ const findDia =async (req: Request, res: Response) => {
         const day = await prisma.dia.findMany({
             where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
         })
+        
+        const id = day[0].id;
 
-        return res.json(day);
+        const dia_noiva = await prisma.dia_noiva.findMany({
+            where: {id_dia: id},
+            include:{
+                noiva: true,
+            }
+        })
+
+        return res.json(dia_noiva);
 
 
     }catch(error){
