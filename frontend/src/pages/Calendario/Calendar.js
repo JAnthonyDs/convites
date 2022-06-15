@@ -20,6 +20,7 @@ function App() {
   const [ano,setAno] = useState(0);
   const [noivas,setNoivas] = useState([]);
   const [veri_user,setVeri_user] = useState(localStorage.getItem("acess"))
+  const [date,serDate] = useState(new Date())
 
   const notify = () => {
     toast("Selecione um dia!!",{type:"warning"})
@@ -30,8 +31,10 @@ function App() {
   useEffect(() => {
     async function loadNoivas(){
       setNoivas([])
-      const response = await api.post('/dia',{dia,mes,ano})
+      const response = await api.get(`/getdia/${dia}/${mes}/${ano}`,{dia,mes,ano})
+      console.log(response.data)
       setNoivas(response.data)
+      
     }
     loadNoivas();
   },[dia])
@@ -66,15 +69,12 @@ function App() {
       <Calendar onClickDay={(value) => setDia(value.getDate(),
       setMes(value.getMonth()),
       setAno(value.getFullYear()))
-    } 
+    }
+    //value = {new Date(2022,6,20)} 
     />
     <h1>{dia}/{mes+1}/{ano}</h1>
     
-    <Button variant='outline-success' onClick={() => cadastro()}>Cadastrar noiva nesse dia</Button>  
-    
-
-   
-
+    <Button variant='outline-success' onClick={() => cadastro()}>Cadastrar noiva nesse dia</Button>
    <Table striped bordered hover>
     <thead>
       <tr>
@@ -85,16 +85,16 @@ function App() {
     </tr>
   </thead>
   <tbody>
-    {noivas.map((noiva,index) => (
-      <tr key={noiva.cpf}>
+    {noivas.length ? noivas.map((noiva,index) => (
+      <tr key={noiva.noiva.cpf}>
         <td>{index} </td>
-        <td>{noiva.cpf}</td>
-        <td>{noiva.nome}</td>
-        <td><Button variant="outline-primary" onClick={() => loadInfo(noiva.cpf)}>Ver informações</Button></td>
+        <td>{noiva.noiva.cpf}</td>
+        <td>{noiva.noiva.nome}</td>
+        <td><Button variant="outline-primary">Ver informações</Button></td>
         
       </tr>
       
-    ))}
+    )): <></>}
       
     </tbody>
    </Table>

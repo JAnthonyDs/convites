@@ -49,7 +49,7 @@ export default function CadastroNoivas(){
 
     return(
         <div className="form">
-            <h2>{dia}/{mes}/{ano}</h2>
+            <h2>{dia}/{Number(mes)+1}/{ano}</h2>
             <br></br>
             <strong>CPF:</strong>
             <input className="form-input" onChange={event => setCpf(event.target.value)}></input>

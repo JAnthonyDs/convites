@@ -24,15 +24,16 @@ export default function SignIn() {
     async function handleSubmit(){
         
 
-        const response = await  api.post('/login',{login,senha})
+        //const response = await  api.post('/login',{login,senha})
 
-        if(response.data.length === 1){
-            localStorage.setItem("acess",true)
-            navigate('/calendar')
-        }
-        else{
-          notify()
-        }
+        //if(response.data.length === 1){
+        //    localStorage.setItem("acess",true)
+        //    navigate('/calendar')
+        //}
+        //else{
+         // notify()
+        //}
+        navigate('/calendar')
         
         
     };
