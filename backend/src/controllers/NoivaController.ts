@@ -4,7 +4,8 @@ import {Request, Response} from 'express'
 
 const createUser = async (req: Request, res: Response) => {
     try {
-        const { cpf, nome, descricao, tipo, foto,dia,mes,ano } = req.body
+        const { cpf, nome, descricao, tipo,dia,mes,ano} = req.body
+        const foto = req.file?.filename
 
         let noiva_veri = await prisma.noiva.findUnique({ where: {cpf}})
 

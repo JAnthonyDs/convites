@@ -2,10 +2,17 @@ import { Router } from "express";
 import { NoivaController } from "./controllers/NoivaController";
 import { DiaController } from "./controllers/DiaController";
 import { DiaNoivaController } from "./controllers/DiaNoivaController";
+import multer from "multer";
+
+import { storage } from "./config/multer";
+
+const upload = multer({
+    storage: storage
+})
 
 const router = Router()
 
-router.post("/noiva", NoivaController.createUser)
+router.post("/noiva",upload.single('foto'),NoivaController.createUser)
 router.get("/noiva/:id",NoivaController.getNoiva)
 router.get("/allNoiva",NoivaController.getAllNoiva)
 router.put("/noiva/:id", NoivaController.updateNoiva)
