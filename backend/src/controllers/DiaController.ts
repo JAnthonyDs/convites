@@ -45,6 +45,20 @@ const findDia =async (req: Request, res: Response) => {
     }
 }
 
+const findOneIdDay = async (req: Request, res: Response) => {
+    try{
+        const {dia,mes,ano} = req.params;
+        const day = await prisma.dia.findMany({
+            where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
+        })
+
+        return res.json(day[0].id);
+
+    }catch(error){
+        return res.json(error)
+    }
+}
+
 const findAllDia =async (req: Request, res: Response) => {
     try{
         
@@ -62,5 +76,6 @@ const findAllDia =async (req: Request, res: Response) => {
 export const DiaController = {
     createDia,
     findDia,
-    findAllDia
+    findAllDia,
+    findOneIdDay
 }

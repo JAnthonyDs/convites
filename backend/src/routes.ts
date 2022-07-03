@@ -9,12 +9,12 @@ router.post("/noiva", NoivaController.createUser)
 router.get("/noiva/:id",NoivaController.getNoiva)
 router.get("/allNoiva",NoivaController.getAllNoiva)
 router.put("/noiva/:id", NoivaController.updateNoiva)
-router.delete("/noiva/:id", NoivaController.deleteNoiva)
+router.delete("/noiva/:id/:id_day", NoivaController.deleteNoiva)
 
 router.post("/dia", DiaController.createDia)
 router.get("/getdia/:dia/:mes/:ano", DiaController.findDia)
 router.get("/getAlldia", DiaController.findAllDia)
-
+router.get("/dia/:dia/:mes/:ano",DiaController.findOneIdDay)
 
 router.post("/teste", DiaNoivaController.create)
 router.get("/teste", DiaNoivaController.find)

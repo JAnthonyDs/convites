@@ -40,10 +40,10 @@ function App() {
   },[dia])
 
   
-  async function loadInfo(cpf){
-    const response = await api.post('/noiva/select',{cpf})
-    console.log(response.data)
-    localStorage.setItem('cpf_noiva',cpf)
+  async function loadInfo(id){
+    //const response = await api.get(`/noiva/${id}`)
+    //console.log(response.data)
+    localStorage.setItem('id_noiva',id)
     localStorage.setItem('dia',dia)
     localStorage.setItem('mes',mes)
     localStorage.setItem('ano',ano)
@@ -90,7 +90,7 @@ function App() {
         <td>{index} </td>
         <td>{noiva.noiva.cpf}</td>
         <td>{noiva.noiva.nome}</td>
-        <td><Button variant="outline-primary">Ver informações</Button></td>
+        <td><Button variant="outline-primary" onClick={() => loadInfo(noiva.noiva.id)}>Ver informações</Button></td>
         
       </tr>
       

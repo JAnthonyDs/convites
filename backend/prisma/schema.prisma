@@ -36,6 +36,5 @@ model dia_noiva{
   
   dia_id dia @relation(fields: [id_dia], references: [id])
   id_dia Int
-  
 
 }

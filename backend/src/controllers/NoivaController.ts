@@ -7,7 +7,13 @@ const createUser = async (req: Request, res: Response) => {
         const { cpf, nome, descricao, tipo, foto,dia,mes,ano } = req.body
 
         let noiva_veri = await prisma.noiva.findUnique({ where: {cpf}})
+
         //const id = noiva_veri?.id
+        const day = await prisma.dia.findMany({
+            where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
+        })
+
+        let dia_id = day[0].id
         
         if(noiva_veri){
             
@@ -21,6 +27,13 @@ const createUser = async (req: Request, res: Response) => {
                 descricao,
                 tipo,
                 foto,
+                dia:{
+                    create:{
+                        dia_id:{
+                            connect:{ id: dia_id}
+                        }
+                    }
+                }
                 
             },
         })
@@ -76,10 +89,19 @@ const updateNoiva = async (req: Request, res: Response) => {
 const deleteNoiva =async (req: Request, res: Response) => {
     try{
         const {id} = req.params
+        const {id_day} = req.params
 
+        const deleteRelation = await prisma.dia_noiva.deleteMany({
+            where:{
+                id_noiva: Number(id),
+                dia_id: {
+                    id: Number(id_day)
+                }
+            }
+        })
         const noiva = await prisma.noiva.delete({ where: {id: Number(id)}})
 
-        return res.json({message:"Noiva deletada"});
+        return res.json(deleteRelation);
 
     }catch(error){
         return res.json(error)

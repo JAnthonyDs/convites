@@ -17,6 +17,7 @@ export default function ViewNoivas(){
     const [mes,setMes] = useState()
     const [ano,setAno] = useState()
     const [cpf,setCpf] = useState()
+    const [id,setId] = useState()
 
     const notify = () => {
         toast("Atualizado com Sucesso",{type:"success"})
@@ -24,12 +25,14 @@ export default function ViewNoivas(){
 
     useEffect( () =>{
         async function loadInfo(){
-            const cpf = localStorage.getItem("cpf_noiva")
-            setCpf(cpf)
-            const response = await api.post('/noiva/select',{cpf})
-            setNome(response.data[0].nome)
-            setDescricao(response.data[0].descricao)
-            
+            const id = localStorage.getItem("id_noiva")
+            setId(id)
+            const response = await api.get(`/noiva/${id}`)
+
+            setCpf(response.data.cpf)
+            setNome(response.data.nome)
+            setDescricao(response.data.descricao)
+            //console.log(response.data.descricao)
             setDia(localStorage.getItem('dia'))
             setMes(localStorage.getItem('mes'))
             setAno(localStorage.getItem('ano'))
@@ -39,14 +42,17 @@ export default function ViewNoivas(){
     },[])
 
     async function update(cpf){
-        const response = await api.put('/noiva/update',{"cpf_antigo":cpf,cpf,nome,descricao})
+        const response = await api.put(`/noiva/${id}`,{cpf,nome,descricao})
         console.log(response.data)
         notify();
     }
 
-    async function deletar(cpf){
+    async function deletar(id){
         //apaga a noiva naquele dia
-        const response = await api.delete('/dia/delete/',{dia,mes,ano,cpf})
+        const dia_id = await api.get(`/dia/${dia}/${mes}/${ano}`)
+        const response = await api.delete(`/noiva/${id}/${dia_id.data}`)
+
+        alert("Noiva excluída com sucesso!")
         
     }
 
@@ -55,15 +61,15 @@ export default function ViewNoivas(){
             <h2>{dia}/{mes}/{ano}</h2>
             <br></br>
             <strong>CPF:</strong>
-            <input className="form-input" value={cpf}></input>
+            <input className="form-input" value={id} onChange= {event => setCpf(event.target.value)}></input>
             <strong>Nome:</strong>
             <input className="form-input" value={nome} onChange={event => setNome(event.target.value)}></input>
             <strong>Descrição:</strong>
             <input className="form-descricao" value={descricao} onChange={event => setDescricao(event.target.value)}></input>
             <div className="buttons">
-            <Button className="button" variant="outline-danger" onClick={() => deletar(cpf)}>Excluir</Button>
+            <Button className="button" variant="outline-danger" onClick={() => deletar(id)}>Excluir</Button>
             
-            <Button variant="outline-success" onClick={() => update(cpf)}>Salvar</Button>
+            <Button variant="outline-success" onClick={() => update(id)}>Salvar</Button>
             </div>
 
             <ToastContainer position="top-center" newestOnTop/>
