@@ -57,9 +57,9 @@ function App() {
       notify()
     }else{
       localStorage.setItem('dia',dia)
-    localStorage.setItem('mes',mes)
-    localStorage.setItem('ano',ano)
-    navigate('/cadastro')
+      localStorage.setItem('mes',mes)
+      localStorage.setItem('ano',ano)
+      navigate('/cadastro')
     }
     
   }

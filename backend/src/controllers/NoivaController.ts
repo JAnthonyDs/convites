@@ -8,17 +8,16 @@ const createUser = async (req: Request, res: Response) => {
 
         let noiva_veri = await prisma.noiva.findUnique({ where: {cpf}})
 
-        //const id = noiva_veri?.id
-        const day = await prisma.dia.findMany({
-            where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
-        })
-
-        let dia_id = day[0].id
-        
         if(noiva_veri){
-            
             return res.json({message:"Noiva ja cadastrada"})
         }
+
+        //const id = noiva_veri?.id
+        let day = await prisma.dia.findMany({
+            where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
+        })
+        
+        let dia_id = day[0].id
 
         const noiva = await prisma.noiva.create({
             data:{

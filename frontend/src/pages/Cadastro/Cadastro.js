@@ -16,6 +16,8 @@ export default function CadastroNoivas(){
     const [mes,setMes] = useState()
     const [ano,setAno] = useState()
     const [cpf,setCpf] = useState()
+    const [tipo,setTipo] = useState('entrega')
+    const [foto,setFoto] = useState('null.png')
 
     useEffect( () =>{
         async function loadInfo(){
@@ -34,14 +36,8 @@ export default function CadastroNoivas(){
 
     async function cadastrar(){
         //verificar cadastro de noiva na banco
-        const veri_cadastro = await api.post('/noiva/select',{cpf});
-        if(veri_cadastro.data.length == 1){
-            //A noiva ja está no banco de noivas
-            const respo = await api.post('/dia/insert',{dia,mes,ano,cpf})
-        }else{
-            const response = await api.post('/noiva/',{cpf,nome,descricao})
-            const respo = await api.post('/dia/insert',{dia,mes,ano,cpf})
-        }
+        
+        const res = await api.post('/noiva',{cpf,nome,descricao,tipo,foto,dia,mes,ano})
 
         notify()
         
