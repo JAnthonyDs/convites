@@ -72,10 +72,27 @@ const findAllDia =async (req: Request, res: Response) => {
     }
 }
 
+const deletedia = async (req:Request, res: Response) =>{
+    try{
+        const {id_dia} = req.params
+
+        const dia = await prisma.dia.deleteMany({
+            where:{
+                id: Number(id_dia)
+            }
+        })
+
+        return res.json(dia)
+    }catch(error){
+        return res.json(error)
+    }
+}
+
 
 export const DiaController = {
     createDia,
     findDia,
     findAllDia,
-    findOneIdDay
+    findOneIdDay,
+    deletedia
 }

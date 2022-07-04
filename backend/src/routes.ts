@@ -22,6 +22,7 @@ router.post("/dia", DiaController.createDia)
 router.get("/getdia/:dia/:mes/:ano", DiaController.findDia)
 router.get("/getAlldia", DiaController.findAllDia)
 router.get("/dia/:dia/:mes/:ano",DiaController.findOneIdDay)
+router.delete("/dia/:id_dia", DiaController.deletedia)
 
 router.post("/teste", DiaNoivaController.create)
 router.get("/teste", DiaNoivaController.find)

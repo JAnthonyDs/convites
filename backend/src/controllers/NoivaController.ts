@@ -7,6 +7,8 @@ const createUser = async (req: Request, res: Response) => {
         const { cpf, nome, descricao, tipo,dia,mes,ano} = req.body
         const foto = req.file?.filename
 
+        console.log(cpf,nome,descricao,tipo,foto,dia,mes,ano);
+
         let noiva_veri = await prisma.noiva.findUnique({ where: {cpf}})
 
         if(noiva_veri){
@@ -14,9 +16,20 @@ const createUser = async (req: Request, res: Response) => {
         }
 
         //const id = noiva_veri?.id
-        let day = await prisma.dia.findMany({
+        var day = await prisma.dia.findMany({
             where: {dia: Number(dia), mes: Number(mes), ano: Number(ano)}
         })
+                
+        if(day.length == 0){
+            let aux = await prisma.dia.create({
+                data:{
+                    dia: Number(dia),
+                    mes: Number(mes),
+                    ano: Number(ano)
+                }
+            })
+            day.push(aux)
+        }
         
         let dia_id = day[0].id
 
